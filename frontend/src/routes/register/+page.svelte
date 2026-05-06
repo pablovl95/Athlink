@@ -1,6 +1,7 @@
 <script>
   import { goto } from '$app/navigation';
   import { auth } from '$lib/stores/auth.svelte.js';
+  import { MOCK_ADMIN } from '$lib/mock/users.js';
   import AuthPanel from '$lib/AuthPanel.svelte';
 
   let name = $state('');
@@ -29,16 +30,24 @@
     await new Promise((resolve) => setTimeout(resolve, 400));
     loading = false;
 
-    auth.login({ email, name, provider: 'password' });
-    goto('/');
+    auth.login({
+      email,
+      name,
+      headline: '',
+      location: '',
+      company: '',
+      stats: { profileViews: 0, postImpressions: 0 },
+      provider: 'password'
+    });
+    goto('/home');
   }
 
   async function registerWith(provider) {
     loading = true;
     await new Promise((resolve) => setTimeout(resolve, 350));
     loading = false;
-    auth.login({ email: 'admin@admin.com', provider });
-    goto('/');
+    auth.login({ ...MOCK_ADMIN, provider });
+    goto('/home');
   }
 </script>
 

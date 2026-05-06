@@ -1,6 +1,7 @@
 <script>
   import { goto } from '$app/navigation';
   import { auth } from '$lib/stores/auth.svelte.js';
+  import { MOCK_ADMIN } from '$lib/mock/users.js';
   import AuthPanel from '$lib/AuthPanel.svelte';
 
   let email = $state('');
@@ -18,8 +19,8 @@
     loading = false;
 
     if (email === 'admin@admin.com' && password === 'admin') {
-      auth.login({ email, provider: 'password' });
-      goto('/');
+      auth.login({ ...MOCK_ADMIN, provider: 'password' });
+      goto('/home');
     } else {
       error = 'Credenciales incorrectas. Usa admin@admin.com / admin.';
     }
@@ -29,8 +30,8 @@
     loading = true;
     await new Promise((resolve) => setTimeout(resolve, 350));
     loading = false;
-    auth.login({ email: 'admin@admin.com', provider });
-    goto('/');
+    auth.login({ ...MOCK_ADMIN, provider });
+    goto('/home');
   }
 </script>
 
@@ -47,9 +48,6 @@
   <div class="auth-form-wrap">
     <form class="card" onsubmit={submit}>
       <h2>Iniciar sesión</h2>
-      <p class="hint">
-        Cuenta de prueba: <code>admin@admin.com</code> / <code>admin</code>
-      </p>
 
       <label>
         Correo

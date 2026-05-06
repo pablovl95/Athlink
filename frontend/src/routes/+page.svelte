@@ -15,9 +15,7 @@
     </p>
 
     {#if auth.isAuthenticated}
-      <p class="status">
-        Has iniciado sesión como <strong>{auth.user.email}</strong>.
-      </p>
+      <button class="btn primary" onclick={() => goto('/home')}>Ir a tu inicio</button>
     {:else}
       <button class="btn primary" onclick={() => goto('/register')}>Empezar</button>
     {/if}
